@@ -26,19 +26,16 @@ In the first version of this application, a single user type will exist. Users c
 * id: varchar
 * name: varchar
 * email: varchar
-* create_date: date
+* created_date: date
 * last_login_date: date
 
 2. Bucket
 * guid: varchar
 * name: varchar
 * location: varchar
-* creation_date: date
+* created_date: date
 * created_by: varchar
-* completion_percentage: decimal
 * expiration_date: date
-* num_items: integer
-* total_weight: decimal
 * is_completed: boolean
 * completion_date: date
 
@@ -63,8 +60,9 @@ In the first version of this application, a single user type will exist. Users c
 * is_completed: boolean
 * completion_date: date
 * completed_by: varchar
-* creation_date: date
+* created_date: date
 * created_by: varchar
+* status: varchar
 
 4. BucketMember
 * bucket_id: varchar
@@ -76,6 +74,14 @@ In the first version of this application, a single user type will exist. Users c
 * user_id: varchar
 * vote: varchar
 * cast_date: date
+
+6. BucketInvitation
+* guid: varchar
+* email_address: varchar
+* user_id: varchar
+* bucket_id: varchar
+* created_date: date
+* created_by: varchar
 
 ### 6. User Interfaces (UI)
 - Splash page with brief application description and a log in/sign up link.

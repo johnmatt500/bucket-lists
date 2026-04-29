@@ -1,7 +1,7 @@
 # Architecture Plan: BucketLists v0.0.0
 
 ## Context
-Designing the initial architecture for BucketLists — a collaborative bucket list app where groups can create shared lists, vote on items, and track completion together. This plan incorporates design decisions made during requirements review.
+Designing the initial architecture for BucketLists — a collaborative bucket list app where groups can create shared lists of milestone events they'd like to experience, vote on items, and track completion together. This plan incorporates design decisions made during requirements review.
 
 ---
 
@@ -13,27 +13,18 @@ Designing the initial architecture for BucketLists — a collaborative bucket li
 | API style | REST |
 | Auth | JWT (stateless) |
 | Real-time | Polling every N seconds |
-| Email service | Resend |
+| Email service | Gmail + Nodemailer |
 | Voting rule | >=50% approvals passes; non-votes count as abstain after timeout (suggested default: 72h) |
 | Bucket restart | Any single member can trigger restart for all members |
 | Item weight | Computed at query time: `importance * total_hours_required` (not stored) |
-| Completion % | `completed_items / total_items` (uniform, not weighted), computed at query time |
+| Completion % | `completed_items_weight / total_items_weight` (weighted), computed at query time |
 | Bucket location | Freetext varchar only (no geocoding) |
 | Invitations | Email invite with pending state; invitee creates account if needed |
 | Member removal | Not in v0; any member can invite others |
-| Stored vs computed | Remove `completion_percentage`, `total_weight`, `num_items` from Bucket; remove `weight` from Item |
 
 ---
 
 ## Revised Data Model
-
-### Changes from spec
-- **Remove** from `Bucket`: `completion_percentage`, `total_weight`, `num_items` → computed via SQL
-- **Remove** from `Item`: `weight` → computed as `importance * total_hours_required`
-- **Add** `Invitation` table for pending email invites
-- **Add** `status` to `Item`: `pending` | `approved` | `rejected`
-- **Standardize IDs**: use `id UUID PRIMARY KEY DEFAULT gen_random_uuid()` on all tables (drop inconsistent `guid` naming)
-- **ItemVote.vote**: constrain to `'approve' | 'reject'`
 
 ### Final Tables
 
@@ -48,9 +39,10 @@ Item          (id, bucket_id, name, full_address, address_line_1, address_line_2
 ItemVote      (item_id, user_id, vote CHECK IN ('approve','reject'), cast_at)
 Invitation    (id, bucket_id, invited_email, invited_by, token UUID UNIQUE, created_at, accepted_at)
 ```
+**Note:** use `id UUID PRIMARY KEY DEFAULT gen_random_uuid()` on all tables (drop inconsistent `guid` naming)
 
 ### Computed values (via SQL at query time)
-- `completion_percentage` = `COUNT(*) FILTER (WHERE is_completed) / COUNT(*)` over items
+- `completion_percentage` = `SUM(importance * total_hours_required) FILTER (WHERE is_completed)::float / NULLIF(SUM(importance * total_hours_required), 0)` over items
 - `weight` (per item) = `importance * total_hours_required`
 - `total_weight` (per bucket) = `SUM(importance * total_hours_required)` over items
 
@@ -74,7 +66,7 @@ frontend/          React 18 + TypeScript + Vite
 backend/           Node.js + Express + TypeScript
 database/          PostgreSQL (local dev) → Supabase-hosted (production)
 auth               Custom JWT (jsonwebtoken) — no third-party auth provider in v0
-email              Resend SDK
+email              Nodemailer npm package
 hosting            Vercel (frontend + backend as serverless functions)
 ```
 
@@ -171,16 +163,17 @@ GET    /invitations/:token             accept invite (redirect to login/signup +
 | My Buckets | `/buckets` | Grid of tiles; create bucket button |
 | Bucket Detail | `/buckets/:id` | Bucket fill graphic + item list + pending section |
 | Create Bucket | `/buckets/new` | Inline form or modal |
+| Add Item | `/buckets/:id/new-item` | Inline form or modal |
 | Accept Invite | `/invite/:token` | Middleware redirects if not logged in |
 
 ---
 
-## Open Questions (decide before implementation)
+## Answers to Open Questions
 
-1. **Vote timeout**: 72 hours is suggested — confirm or adjust.
-2. **Email verification**: Does sign-up require email confirmation before the user can log in, or is it skipped in v0?
-3. **Item deletion**: Can any member delete an item, or only the creator? What about approved items?
-4. **Abstain counting**: Exclude non-voters from the denominator (recommended) vs. count as "no".
+1. **Vote timeout**: 72 hours before auto-abstain.
+2. **Email verification**: Sign-up requires email confirmation before the user can log in?
+3. **Item deletion**: In v0, any member can delete an item?
+4. **Abstain counting**: Exclude non-voters from the denominator.
 
 ---
 
