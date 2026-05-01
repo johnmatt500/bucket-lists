@@ -1,0 +1,397 @@
+.page {
+  --forest: #1B3828;
+  --amber:  #C8893A;
+  --cream:  #F5EFE4;
+  --muted:  #7A6A52;
+  --rule:   rgba(27, 56, 40, 0.11);
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  font-family: 'Lora', Georgia, serif;
+}
+
+/* ── Nav ── */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.125rem 2.5rem;
+  background: var(--cream);
+  border-bottom: 1px solid var(--rule);
+}
+
+.logo {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--forest);
+  letter-spacing: -0.02em;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--cream);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.userName {
+  font-size: 0.9375rem;
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.logout {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  transition: color 0.15s;
+}
+
+.logout:hover {
+  color: var(--forest);
+}
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+  animation: fadeUp 0.4s ease-out both;
+}
+
+/* ── Back link ── */
+.backLink {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  transition: color 0.15s;
+}
+
+.backLink:hover {
+  color: var(--forest);
+}
+
+/* ── Bucket header ── */
+.bucketHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.bucketMeta {
+  flex: 1;
+}
+
+.bucketName {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--forest);
+  margin-bottom: 0.4rem;
+}
+
+.bucketLocation {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+
+.bucketExpiry {
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.completionLabel {
+  font-size: 0.875rem;
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.bucketGraphic {
+  flex-shrink: 0;
+}
+
+/* ── Two-column layout ── */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+/* ── Section card ── */
+.section {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(27, 56, 40, 0.05);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sectionTitle {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--forest);
+  letter-spacing: -0.025em;
+}
+
+.addBtn {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--amber);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 0.875rem;
+  cursor: pointer;
+  transition: background 0.15s, translate 0.12s;
+  white-space: nowrap;
+}
+
+.addBtn:hover {
+  background: #b87a30;
+  translate: 0 -1px;
+}
+
+/* ── Item groups ── */
+.itemGroup {
+  margin-bottom: 1.25rem;
+}
+
+.itemGroup:last-child {
+  margin-bottom: 0;
+}
+
+.itemGroupLabel {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.itemList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.5rem;
+  border-radius: 7px;
+  transition: background 0.12s;
+}
+
+.itemRow:hover {
+  background: rgba(27, 56, 40, 0.04);
+}
+
+.itemCompleted .itemName {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.itemCheck {
+  font-size: 0.875rem;
+  color: var(--forest);
+  font-weight: 700;
+  width: 1.125rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.itemCheckPending {
+  color: var(--amber);
+}
+
+.itemName {
+  flex: 1;
+  font-size: 0.9375rem;
+  color: var(--forest);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemImportance {
+  font-size: 0.75rem;
+  color: var(--amber);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.emptyNote {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* ── Members ── */
+.memberList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.memberRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.5rem;
+  border-radius: 7px;
+  transition: background 0.12s;
+}
+
+.memberRow:hover {
+  background: rgba(27, 56, 40, 0.04);
+}
+
+.memberAvatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--cream);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.memberInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.memberName {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--forest);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.memberEmail {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.memberBadge {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.badgeAccepted {
+  background: rgba(27, 56, 40, 0.1);
+  color: var(--forest);
+}
+
+.badgePending {
+  background: rgba(200, 137, 58, 0.15);
+  color: var(--amber);
+}
+
+/* ── Loading ── */
+.loadingText {
+  font-style: italic;
+  color: var(--muted);
+  padding-top: 3rem;
+  text-align: center;
+}
+
+/* ── Animation ── */
+@keyframes fadeUp {
+  from { opacity: 0; translate: 0 14px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+  .nav {
+    padding: 1rem 1.25rem;
+  }
+  .main {
+    padding: 1.75rem 1.25rem 3rem;
+  }
+  .bucketName {
+    font-size: 1.75rem;
+  }
+  .userName {
+    display: none;
+  }
+}

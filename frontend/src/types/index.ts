@@ -37,3 +37,44 @@ export interface CreateBucketPayload {
   expiration_date: string
   invite_emails: string[]
 }
+
+export interface BucketDetail {
+  id: string
+  name: string
+  location: string | null
+  expiration_date: string | null
+  is_completed: boolean
+  completion_pct: number
+  member_count: number
+}
+
+export interface Item {
+  id: string
+  bucket_id: string
+  name: string
+  full_address: string | null
+  importance: number
+  amount_time_required: number
+  time_scale: 'hours' | 'days'
+  total_hours_required: number
+  status: 'pending' | 'approved' | 'rejected'
+  is_completed: boolean
+  completion_date: string | null
+  created_at: string
+}
+
+export interface BucketMember {
+  user_id: string | null
+  name: string | null
+  email: string
+  joined_at: string | null
+  invite_status: 'accepted' | 'pending'
+}
+
+export interface CreateItemPayload {
+  name: string
+  importance: number
+  amount_time_required: number
+  time_scale: 'hours' | 'days'
+  full_address?: string
+}

@@ -3,6 +3,7 @@ import Landing from './pages/Landing'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Buckets from './pages/Buckets'
+import BucketDetail from './pages/BucketDetail'
 import Invite from './pages/Invite'
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/buckets" element={<Buckets />} />
+        <Route path="/buckets/:id" element={<BucketDetail />} />
         <Route path="/invite/:token" element={<Invite />} />
       </Routes>
     </BrowserRouter>

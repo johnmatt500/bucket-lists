@@ -63,7 +63,7 @@ export default function Buckets() {
 
         {!loadingBuckets && buckets.length > 0 && (
           <div className={styles.grid}>
-            {buckets.map(b => <BucketTile key={b.id} bucket={b} />)}
+            {buckets.map(b => <BucketTile key={b.id} bucket={b} onClick={() => navigate(`/buckets/${b.id}`)} />)}
           </div>
         )}
 
