@@ -1,10 +1,12 @@
 import { useState, FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import styles from './Signup.module.css'
 import { signup } from '../api/auth'
 
 export default function Signup() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const next = searchParams.get('next')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -39,7 +41,7 @@ export default function Signup() {
       const { token, user } = await signup(name.trim(), email.trim(), password)
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
-      navigate('/buckets')
+      navigate(next ?? '/buckets')
     } catch (err: unknown) {
       setServerError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {

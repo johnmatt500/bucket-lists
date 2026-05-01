@@ -1,8 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styles from './Buckets.module.css'
 import BucketGraphic from '../components/BucketGraphic'
-import type { User } from '../types'
+import BucketTile from '../components/BucketTile'
+import CreateBucketModal from '../components/CreateBucketModal'
+import { listBuckets } from '../api/buckets'
+import type { Bucket, User } from '../types'
 
 export default function Buckets() {
   const navigate = useNavigate()
@@ -11,10 +14,19 @@ export default function Buckets() {
   const userJson = localStorage.getItem('user')
   const user: User | null = userJson ? JSON.parse(userJson) : null
 
+  const [buckets, setBuckets] = useState<Bucket[]>([])
+  const [loadingBuckets, setLoadingBuckets] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+
   useEffect(() => {
     if (!token || !user) {
       navigate('/login', { replace: true })
+      return
     }
+    listBuckets()
+      .then(({ buckets }) => setBuckets(buckets))
+      .catch(console.error)
+      .finally(() => setLoadingBuckets(false))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!token || !user) return null
@@ -46,21 +58,41 @@ export default function Buckets() {
       <main className={styles.main}>
         <div className={styles.pageHeader}>
           <h1 className={styles.pageTitle}>My Buckets</h1>
-          <button className={styles.newBucket}>+ New bucket</button>
+          <button className={styles.newBucket} onClick={() => setShowModal(true)}>+ New bucket</button>
         </div>
 
-        <div className={styles.emptyState}>
-          <div className={styles.emptyGraphic}>
-            <BucketGraphic fillPercent={0} size={140} />
+        {!loadingBuckets && buckets.length > 0 && (
+          <div className={styles.grid}>
+            {buckets.map(b => <BucketTile key={b.id} bucket={b} />)}
           </div>
-          <h2 className={styles.emptyTitle}>Your adventure list awaits</h2>
-          <p className={styles.emptyBody}>
-            Create your first bucket — a shared space where you and your crew
-            can plan, vote, and check off experiences together.
-          </p>
-          <button className={styles.emptyAction}>Start a bucket</button>
-        </div>
+        )}
+
+        {!loadingBuckets && buckets.length === 0 && (
+          <div className={styles.emptyState}>
+            <div className={styles.emptyGraphic}>
+              <BucketGraphic fillPercent={0} size={140} />
+            </div>
+            <h2 className={styles.emptyTitle}>Your adventure list awaits</h2>
+            <p className={styles.emptyBody}>
+              Create your first bucket — a shared space where you and your crew
+              can plan, vote, and check off experiences together.
+            </p>
+            <button className={styles.emptyAction} onClick={() => setShowModal(true)}>
+              Start a bucket
+            </button>
+          </div>
+        )}
       </main>
+
+      {showModal && (
+        <CreateBucketModal
+          onClose={() => setShowModal(false)}
+          onCreated={newBucket => {
+            setBuckets(prev => [newBucket, ...prev])
+            setShowModal(false)
+          }}
+        />
+      )}
     </div>
   )
 }

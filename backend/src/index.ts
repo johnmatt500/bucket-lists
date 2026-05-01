@@ -2,6 +2,9 @@ import 'dotenv/config'
 import express, { Request, Response, NextFunction } from 'express'
 import cors from 'cors'
 import authRoutes from './routes/auth'
+import bucketRoutes from './routes/buckets'
+import invitationRoutes from './routes/invitations'
+import { requireAuth } from './middleware/auth'
 
 const app = express()
 const PORT = process.env.PORT ?? 3001
@@ -14,6 +17,8 @@ app.get('/api/health', (_req, res) => {
 })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/buckets', requireAuth, bucketRoutes)
+app.use('/api/invitations', invitationRoutes)
 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error(err)

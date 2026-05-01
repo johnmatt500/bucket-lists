@@ -1,0 +1,232 @@
+.page {
+  --forest:  #1B3828;
+  --amber:   #C8893A;
+  --cream:   #F5EFE4;
+  --muted:   #7A6A52;
+  --error:   #A83232;
+  --rule:    rgba(27, 56, 40, 0.11);
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+  font-family: 'Lora', Georgia, serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 1.375rem 2.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.logo {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--forest);
+  letter-spacing: -0.02em;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.loadingText {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+/* ── Card ── */
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 2.5rem 2.5rem 2.25rem;
+  box-shadow: 0 4px 24px rgba(27, 56, 40, 0.07);
+  animation: fadeUp 0.4s ease-out both;
+}
+
+.cardHead {
+  margin-bottom: 1.75rem;
+}
+
+.title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.875rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--forest);
+  margin-bottom: 0.375rem;
+}
+
+.subtitle {
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+/* ── Bucket info ── */
+.bucketInfo {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.infoLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.375rem;
+}
+
+.bucketName {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--forest);
+  letter-spacing: -0.025em;
+  margin: 0 0 0.25rem;
+}
+
+.inviterLine {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ── Server error ── */
+.serverError {
+  background: rgba(168, 50, 50, 0.07);
+  border: 1px solid rgba(168, 50, 50, 0.22);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: var(--error);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.authPrompt {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+}
+
+.acceptBtn {
+  display: block;
+  text-align: center;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--forest);
+  color: var(--cream);
+  border: none;
+  border-radius: 7px;
+  padding: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, translate 0.12s;
+}
+
+.acceptBtn:hover:not(:disabled) {
+  background: #274f3a;
+  translate: 0 -1px;
+}
+
+.acceptBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secondaryBtn {
+  display: block;
+  text-align: center;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  background: transparent;
+  color: var(--forest);
+  border: 1.5px solid rgba(27, 56, 40, 0.3);
+  border-radius: 7px;
+  padding: 0.875rem;
+  text-decoration: none;
+  transition: border-color 0.15s, translate 0.12s;
+}
+
+.secondaryBtn:hover {
+  border-color: var(--forest);
+  translate: 0 -1px;
+}
+
+/* ── Success ── */
+.successState {
+  text-align: center;
+}
+
+.successMsg {
+  font-size: 1rem;
+  color: var(--forest);
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.primaryLink {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--amber);
+  text-decoration: underline;
+  text-decoration-color: rgba(200, 137, 58, 0.4);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.15s;
+}
+
+.primaryLink:hover {
+  text-decoration-color: var(--amber);
+}
+
+.backLink {
+  display: block;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.backLink:hover {
+  color: var(--forest);
+}
+
+/* ── Animation ── */
+@keyframes fadeUp {
+  from { opacity: 0; translate: 0 14px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+@media (max-width: 480px) {
+  .header { padding: 1rem 1.5rem; }
+  .card { padding: 2rem 1.5rem 1.75rem; border-radius: 10px; }
+}

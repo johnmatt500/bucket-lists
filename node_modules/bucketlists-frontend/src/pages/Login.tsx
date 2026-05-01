@@ -1,10 +1,12 @@
 import { useState, FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import styles from './Login.module.css'
 import { login } from '../api/auth'
 
 export default function Login() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const next = searchParams.get('next')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -33,7 +35,7 @@ export default function Login() {
       const { token, user } = await login(email.trim(), password)
       localStorage.setItem('token', token)
       localStorage.setItem('user', JSON.stringify(user))
-      navigate('/buckets')
+      navigate(next ?? '/buckets')
     } catch (err: unknown) {
       setServerError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {

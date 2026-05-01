@@ -1,14 +1,5 @@
 import type { AuthResponse } from '../types'
-
-async function request<T>(path: string, options: RequestInit): Promise<T> {
-  const res = await fetch(`/api${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
-    ...options,
-  })
-  const data = await res.json()
-  if (!res.ok) throw new Error(data.error ?? 'Request failed')
-  return data as T
-}
+import { request } from './request'
 
 export function signup(name: string, email: string, password: string): Promise<AuthResponse> {
   return request('/auth/signup', {
